@@ -13,3 +13,5 @@ And you should get an image like this:
 <p align="center">
 	<img src="https://raw.githubusercontent.com/vkoskiv/thumbgen/master/example.png" width="768">
 </p>
+
+Not perfect, but hey, beats trying to make it in GIMP!
