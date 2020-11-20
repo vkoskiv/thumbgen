@@ -17,3 +17,9 @@ And you should get an image like this:
 </p>
 
 Not perfect, but hey, beats trying to make it in GIMP!
+
+## Caveats
+
+* It currently assumes any given video file is precisely 1920x1080
+* It likely has bugs
+* The text will overflow if you type in any more than the example above^
