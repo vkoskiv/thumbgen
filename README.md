@@ -2,13 +2,13 @@
 
 Requires imagemagick and ffmpeg to be installed. You probably also need the Helvetica-Bold font. Just tweak the script if it doesn't work!
 
-Usage: `./thumbgen "<video file>" <your title string>`
+Usage: `./thumbgen.sh "<video file>" <your title string>`
 At least for now, provide the path to your video file in quotes, so it doesn't mess up the arguments parsing.
 Better yet, submit a PR that fixes this obvious oversight!
 
 # Example:
 
-Run `./thumbgen "your_cool_vid.mkv" Integrating a flux capacitor into our time machine!`
+Run `./thumbgen.sh "your_cool_vid.mkv" Integrating a flux capacitor into our time machine!`
 
 And you should get an image like this:
 
