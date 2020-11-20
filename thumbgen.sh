@@ -21,7 +21,12 @@ FILENAME="$RANDOM_FRAME.png"
 # Add the dark rectangle
 convert $FILENAME -strokewidth 0 -fill "rgba(0, 0, 0, 0.85)" -draw "rectangle 0,0 960,1080" temp.png
 
-convert temp.png \( -gravity Center -pointsize 180 -size 900x -background transparent -fill white -font helvetica-bold caption:"$thumbstr" \) -gravity West -geometry +25+0 -composite thumbnail.png
+# (What I use) FONT="/Users/vkoskiv/Library/Fonts/SFMono-Regular.otf"
+FONT="helvetica-bold"
+LINE_SPACING=25
+FONTSIZE=180
+# And finally, add the title text.
+convert temp.png \( -gravity Center -pointsize $FONTSIZE -size 900x -background transparent -fill white -font $FONT -interline-spacing $LINE_SPACING caption:"$thumbstr" \) -gravity West -geometry +25+0 -composite thumbnail.png
 rm temp.png
 rm "$RANDOM_FRAME".png
 echo "Wrote thumbnail.png"
