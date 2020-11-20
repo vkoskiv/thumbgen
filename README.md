@@ -20,6 +20,6 @@ Not perfect, but hey, beats trying to make it in GIMP!
 
 ## Caveats
 
-* It currently assumes any given video file is precisely 1920x1080
+* ~~It currently assumes any given video file is precisely 1920x1080~~ *FIXED*
 * It likely has bugs
 * The text will overflow if you type in any more than the example above^
