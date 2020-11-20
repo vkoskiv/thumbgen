@@ -10,11 +10,11 @@ thumbstr=$(echo "$*" | cut -d ' ' -f2-)
 echo "$thumbstr"
 
 # Grab a random frame from the video
-TOTAL_FRAMES=$(ffmpeg -i $1 -vcodec copy -acodec copy -f null /dev/null 2>&1 | grep frame | cut -d ' ' -f 2 | sed s/frame=//)
-FPS=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1:nokey=1 -show_entries stream=avg_frame_rate $1 | cut -d'/' -f 1)
+TOTAL_FRAMES=$(ffmpeg -i "$1" -vcodec copy -acodec copy -f null /dev/null 2>&1 | grep frame | cut -d ' ' -f 2 | sed s/frame=//)
+FPS=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1:nokey=1 -show_entries stream=avg_frame_rate "$1" | cut -d'/' -f 1)
 RANDOM_FRAME=$[RANDOM % TOTAL_FRAMES]
 TIME=$((RANDOM_FRAME/FPS))
-ffmpeg -ss $TIME -i $1 -frames:v 1 $RANDOM_FRAME.png 2>&1 > /dev/null
+ffmpeg -ss $TIME -i "$1" -frames:v 1 $RANDOM_FRAME.png 2>&1 > /dev/null
 FILENAME="$RANDOM_FRAME.png"
 
 # Superimpose stuff with imagemagick
