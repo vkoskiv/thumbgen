@@ -2,7 +2,7 @@
 
 # check args
 if [ $# -lt 2 ]; then
-	echo "Provide the video file and text, bro"
+	echo "Usage: $0 \"<path to video file>\" <Your title string>"
 	exit 255
 fi
 
