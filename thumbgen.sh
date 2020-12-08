@@ -1,24 +1,33 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # check args
-if [ $# -lt 2 ]; then
-	echo "Usage: $0 \"<path to video file>\" <Your title string>"
-	exit 255
+if (( $# >= 2 )); then
+    file=$1
+    if ! file --mime-type -b "$file" | grep -qE '^video/'
+    then
+	echo "Error: $1 is not a video." >&2
+	echo 'Usage: '$0' "<path to video file>" <Your title string>'
+	exit 1
+    fi
+else
+    echo "Usage: $0 \"<path to video file>\" <Your title string>"
+    exit 255
 fi
 
-thumbstr=$(echo "$*" | cut -d ' ' -f2-)
+shift # Skip the first argument, i.e. the video file.
+thumbstr="$*"
 echo "Working..."
 
 # Grab a random frame from the video
-TOTAL_FRAMES=$(ffmpeg -i "$1" -vcodec copy -acodec copy -f null /dev/null 2>&1 | grep frame | cut -d ' ' -f 2)
-FPS=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1:nokey=1 -show_entries stream=avg_frame_rate "$1" | cut -d'/' -f 1)
+TOTAL_FRAMES=$(ffmpeg -i "$file" -vcodec copy -acodec copy -f null /dev/null 2>&1 | grep frame | cut -d ' ' -f 2)
+FPS=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1:nokey=1 -show_entries stream=avg_frame_rate "$file" | cut -d'/' -f 1)
 RANDOM_FRAME=$((RANDOM % TOTAL_FRAMES))
 TIME=$((RANDOM_FRAME/FPS))
-ffmpeg -ss $TIME -i "$1" -frames:v 1 "$RANDOM_FRAME".png > /dev/null 2>&1
+ffmpeg -ss $TIME -i "$file" -frames:v 1 "$RANDOM_FRAME".png > /dev/null 2>&1
 FILENAME="$RANDOM_FRAME.png"
 
-VIDEO_WIDTH=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1 -show_entries stream "$1" | grep "^width=" | cut -d'=' -f2)
-VIDEO_HEIGHT=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1 -show_entries stream "$1" | grep "^height=" | cut -d'=' -f2)
+VIDEO_WIDTH=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1 -show_entries stream "$file" | grep "^width=" | cut -d'=' -f2)
+VIDEO_HEIGHT=$(ffprobe -v error -select_streams v -of default=noprint_wrappers=1 -show_entries stream "$file" | grep "^height=" | cut -d'=' -f2)
 
 # Superimpose stuff with imagemagick
 # Add the dark rectangle
@@ -35,3 +44,4 @@ convert temp.png \( -gravity Center -pointsize $FONTSIZE -size "$TEXTBOX_WIDTH"x
 rm temp.png
 rm "$RANDOM_FRAME".png
 echo "Wrote thumbnail.png"
+echo thumbnail: $thumbstr
