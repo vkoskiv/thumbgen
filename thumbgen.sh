@@ -6,11 +6,11 @@ if (( $# >= 2 )); then
     if ! file --mime-type -b "$file" | grep -qE '^video/'
     then
 	echo "Error: $1 is not a video." >&2
-	echo 'Usage: '$0' "<path to video file>" <Your title string>'
+	echo 'Usage: '$0' <path to video file> <Your title string>'
 	exit 1
     fi
 else
-    echo "Usage: $0 \"<path to video file>\" <Your title string>"
+    echo "Usage: $0 <path to video file> <Your title string>"
     exit 255
 fi
 
