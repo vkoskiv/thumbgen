@@ -41,6 +41,5 @@ FONTSIZE=180
 TEXTBOX_WIDTH=$(((VIDEO_WIDTH / 2) - 60))
 # And finally, add the title text.
 convert temp.png \( -gravity Center -pointsize $FONTSIZE -size "$TEXTBOX_WIDTH"x -background transparent -fill white -font $FONT -interline-spacing $LINE_SPACING caption:"$thumbstr" \) -gravity West -geometry +25+0 -composite thumbnail.png
-rm temp.png
-rm "$RANDOM_FRAME".png
+rm temp.png "$RANDOM_FRAME".png
 echo "Wrote thumbnail.png"
